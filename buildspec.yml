@@ -11,8 +11,10 @@ phases:
       - docker build --tag "$IMAGE_URI" -f dockerdir/Dockerfile .
   post_build:
     commands:
+      - cd dockerdir
       - ls -l
-      - docker -f dockerdir/Dockerfile push "$IMAGE_URI"
+      - docker push "$IMAGE_URI"
+      - cd ..
       - printf '[{"name":"simple-app","imageUri":"%s"}]' "$IMAGE_URI" > images.json
 artifacts:
   files: images.json
