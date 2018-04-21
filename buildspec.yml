@@ -8,11 +8,11 @@ phases:
   build:
     commands:
       - ls -l
-      - cd dockerdir
-      - docker build --tag "$IMAGE_URI" .
+      - docker build --tag "$IMAGE_URI" -f dockerdir/Dockerfile .
   post_build:
     commands:
       - ls -l
+      - cd dockerdir
       - docker push "$IMAGE_URI"
       - printf '[{"name":"simple-app","imageUri":"%s"}]' "$IMAGE_URI" > images.json
 artifacts:
